@@ -1,0 +1,31 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.versionsBackup
+pom.xml.used
+release.properties
+
+# Eclipse (Rất nên chặn các file cấu hình cá nhân này)
+.metadata/
+.classpath
+.project
+.settings/
+*.launch
+*.factorypath
+
+# Java
+bin/
+*.class
+
+# Logs
+*.log
+
+# OS & Trình duyệt
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Bảo mật (File chứa mật khẩu, API key)
+resources/credentials.json
