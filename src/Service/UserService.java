@@ -10,4 +10,8 @@ public class UserService {
 		return ud.findUserByEmail(email);
 	}
 
+	public void changePassword(User user, String pass) {
+		ud.changePassword(user, pass);
+	}
+
 }
