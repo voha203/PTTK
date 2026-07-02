@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.User;
+import Service.EmailService;
 import Service.OTPService;
 import Service.UserService;
 import View.ForgetPassPage;
@@ -12,6 +13,7 @@ public class ForgetPassController {
 	private ForgetPassPage view;
 	private UserService us = new UserService();
 	private OTPService os = new OTPService();
+	private EmailService es = new EmailService();
 
 	public ForgetPassController() {
 		super();
@@ -48,6 +50,23 @@ public class ForgetPassController {
 			view.showNewPassword();
 		} else {
 			view.showErrorIncorrectOTP();
+		}
+	}
+
+	public static void main(String[] args) {
+		LoginPage loginPage = new LoginPage();
+		LoginController controller = new LoginController(loginPage);
+		loginPage.setController(controller);
+		loginPage.setVisible(true);
+	}
+
+	public void verifyPassword(String pass, String rePass) {
+		if (pass.equals(rePass)) {
+			this.us.changePassword(user, pass);
+			this.es.notifyPasswordChanged(user);
+			view.showPassChangedSuccess();
+		} else {
+			view.showErrorWrongPassword();
 		}
 	}
 }

@@ -49,4 +49,8 @@ public class UserDao {
 
 		return false;
 	}
+
+	public void changePassword(User user, String pass) {
+		// TODO
+	}
 }

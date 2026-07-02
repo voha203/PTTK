@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Controller.ForgetPassController;
@@ -21,11 +22,12 @@ public class ForgetPassPage extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField jtfEmail, jtfOTP;
-	private JButton jbtConfirmEmail, jbtToLogin, jbtResendOTP, jbtConfirmOTP;
+	private JPasswordField jpfPass, jpfRePass;
+	private JButton jbtConfirmEmail, jbtToLogin, jbtResendOTP, jbtConfirmOTP, jbtConfirmPass, jbtToLogin2;
 	private ForgetPassController controller;
 	private CardLayout cardLayout;
 
-	private JPanel forgetPassView, typeOTPView, newPasswordView, returnToLoginView;
+	private JPanel forgetPassView, typeOTPView, newPasswordView, passChangedSuccessView;
 
 	public ForgetPassPage(ForgetPassController ctrl) {
 		this.controller = ctrl;
@@ -109,14 +111,46 @@ public class ForgetPassPage extends JFrame {
 		newPasswordView = new JPanel();
 		newPasswordView.setLayout(new BoxLayout(newPasswordView, BoxLayout.Y_AXIS));
 		getContentPane().add(newPasswordView, "newPassword");
+		
+		newPasswordView.add(new JLabel("New password"));
+		
+		JPanel row1NewPass = new JPanel();
+		newPasswordView.add(row1NewPass);
+		row1NewPass.add(new JLabel("Password: "));
+		jpfPass = new JPasswordField(20);
+		row1NewPass.add(jpfPass);
+		
+		JPanel row2NewPass = new JPanel();
+		newPasswordView.add(row2NewPass);
+		row2NewPass.add(new JLabel("Confirm password: "));
+		jpfRePass = new JPasswordField(20);
+		row2NewPass.add(jpfRePass);
+		
+		jbtConfirmPass = new JButton("Confirm");
+		jbtConfirmPass.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.verifyPassword(new String(jpfPass.getPassword()), new String(jpfRePass.getPassword()));
+			}
+		});
+		newPasswordView.add(jbtConfirmPass);
 
 		/**
-		 * ================= Return to login =================
+		 * ================= Password changed success =================
 		 */
-		returnToLoginView = new JPanel();
-		returnToLoginView.setLayout(new BoxLayout(returnToLoginView, BoxLayout.Y_AXIS));
-		getContentPane().add(returnToLoginView, "returnToLogin");
-
+		passChangedSuccessView = new JPanel();
+		passChangedSuccessView.setLayout(new BoxLayout(passChangedSuccessView, BoxLayout.Y_AXIS));
+		getContentPane().add(passChangedSuccessView, "passChangedSuccess");
+		
+		passChangedSuccessView.add(new JLabel("You changed password successfully"));
+		jbtToLogin2 = new JButton("Return to login");
+		jbtToLogin2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.showLogin();
+			}
+		});
+		passChangedSuccessView.add(jbtToLogin2);
 		setVisible(true);
 	}
 
@@ -126,6 +160,10 @@ public class ForgetPassPage extends JFrame {
 
 	public void showNewPassword() {
 		cardLayout.show(getContentPane(), "newPassword");
+	}
+	
+	public void showPassChangedSuccess() {
+		cardLayout.show(getContentPane(), "passChangedSuccess");
 	}
 
 	public void showErrorUserNotFound() {
@@ -140,4 +178,7 @@ public class ForgetPassPage extends JFrame {
 		JOptionPane.showMessageDialog(this, "OTP is incorrect", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void showErrorWrongPassword() {
+		JOptionPane.showMessageDialog(this, "Password is wrong", "Error", JOptionPane.ERROR_MESSAGE);
+	}
 }
