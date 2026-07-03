@@ -54,7 +54,7 @@ public class LoginPage extends JFrame {
         JLabel lblOr = new JLabel("        ----- OR -----");
         lblOr.setBounds(140, 195, 120, 20);
 
-        btnGoogleLogin = new JButton("Register with Google");
+        btnGoogleLogin = new JButton("Login with Google");
         btnGoogleLogin.setBounds(40, 220, 310, 30); 
 		
         btnRegister = new JButton("Register");
