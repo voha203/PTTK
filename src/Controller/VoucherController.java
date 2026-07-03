@@ -27,8 +27,20 @@ public class VoucherController {
 	public Voucher getVoucherById(int voucherId) {
 		return voucherService.getVoucherById(voucherId);
 	}
-
+	public Voucher getVoucherByCode(String code) {
+        return voucherService.getVoucherByCode(code);
+    }
 	public List<Voucher> getAllVoucher() {
 		return voucherService.getAllVoucher();
 	}
+	public String applyVoucher(String code, double price) {
+        return voucherService.applyVoucher(code, price);
+    }
+
+    public double calculateFinalPrice(String code, double price) {
+        return voucherService.calculateFinalPrice(code, price);
+    }
+    public boolean increaseUsedCount(int voucherId) {
+        return voucherService.increaseUsedCount(voucherId);
+    }
 }

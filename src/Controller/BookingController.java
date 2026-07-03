@@ -27,4 +27,7 @@ public class BookingController {
 	public List<Booking> getAllBooking() {
 		return bookingService.getAllBooking();
 	}
+	public int getLastBookingId() {
+	    return bookingService.getLastBookingId();
+	}
 }

@@ -64,12 +64,9 @@ public class RatingDAO {
 	}
 
 	public Rating getRatingById(int ratingId) {
-		String sql = "SELECT r.*,u.full_name,t.trainer_name " +
-				"FROM rating r " +
-				"JOIN member m ON r.member_id=m.member_id " +
-				"JOIN users u ON m.user_id=u.id " +
-				"JOIN trainer t ON r.trainer_id=t.trainer_id " +
-				"WHERE rating_id=?";
+		String sql = "SELECT r.*,u.full_name,t.trainer_name " + "FROM rating r "
+				+ "JOIN member m ON r.member_id=m.member_id " + "JOIN users u ON m.user_id=u.id "
+				+ "JOIN trainer t ON r.trainer_id=t.trainer_id " + "WHERE rating_id=?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, ratingId);
@@ -95,11 +92,9 @@ public class RatingDAO {
 
 	public List<Rating> getAllRating() {
 		List<Rating> list = new ArrayList<>();
-		String sql = "SELECT r.*,u.full_name,t.trainer_name " +
-				"FROM rating r " +
-				"JOIN member m ON r.member_id=m.member_id " +
-				"JOIN users u ON m.user_id=u.id " +
-				"JOIN trainer t ON r.trainer_id=t.trainer_id";
+		String sql = "SELECT r.*,u.full_name,t.trainer_name " + "FROM rating r "
+				+ "JOIN member m ON r.member_id=m.member_id " + "JOIN users u ON m.user_id=u.id "
+				+ "JOIN trainer t ON r.trainer_id=t.trainer_id";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -122,7 +117,7 @@ public class RatingDAO {
 		return list;
 	}
 
-	// 1. Kiểm tra Lịch đặt (Booking) đã hoàn thành chưa mới cho phép đánh giá
+	// Lịch đặt đã hoàn thành chưa mới cho phép đánh giá
 	public boolean bookingCompleted(int bookingId) {
 		String sql = "SELECT * FROM booking WHERE booking_id=? AND status='Completed'";
 		try {

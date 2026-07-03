@@ -22,7 +22,7 @@ import View.AssignmentView;
 //}
 public class Main {
     public static void main(String[] args) {
-        new RatingView
+        new BookingView
         ();
     }
 }
