@@ -1,13 +1,15 @@
 package Service;
 
 import java.util.List;
-
 import Dao.TrainerDAO;
 import Model.Trainer;
 
 public class TrainerService {
+	private TrainerDAO trainerDAO;
 
-	private TrainerDAO trainerDAO = new TrainerDAO();
+	public TrainerService() {
+		trainerDAO = new TrainerDAO();
+	}
 
 	public boolean addTrainer(Trainer trainer) {
 		return trainerDAO.addTrainer(trainer);

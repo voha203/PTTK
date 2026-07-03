@@ -1,21 +1,17 @@
 package Controller;
 
 import java.util.List;
-
 import Model.Trainer;
 import Service.TrainerService;
 
 public class TrainerController {
-
 	private TrainerService trainerService;
 
 	public TrainerController() {
-
 		trainerService = new TrainerService();
 	}
 
 	public boolean addTrainer(Trainer trainer) {
-
 		return trainerService.addTrainer(trainer);
 	}
 
@@ -34,4 +30,5 @@ public class TrainerController {
 	public List<Trainer> getAllTrainer() {
 		return trainerService.getAllTrainer();
 	}
+
 }
