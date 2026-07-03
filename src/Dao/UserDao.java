@@ -3,6 +3,7 @@ package Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import Model.User;
 
@@ -41,6 +42,8 @@ public class UserDao {
 			ps.setString(3, user.getPasswordHash());
 			ps.setString(4, user.getProvider());
 			ps.setString(5, user.getProviderId());
+			ps.setString(6, null);
+			ps.setString(7, null);
 			ps.setBoolean(8, user.getStatus());
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
@@ -51,6 +54,13 @@ public class UserDao {
 	}
 
 	public void changePassword(User user, String pass) {
-		// TODO
+	    String sql = "UPDATE users SET password = ? WHERE id = ?";
+	    try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, pass);
+	        ps.setInt(2, user.getId());
+	        ps.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

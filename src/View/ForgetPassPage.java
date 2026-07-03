@@ -100,7 +100,7 @@ public class ForgetPassPage extends JFrame {
 		jbtConfirmOTP.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.verifyOTP(jtfEmail.getText());
+				controller.verifyOTP(jtfOTP.getText());
 			}
 		});
 		typeOTPView.add(jbtConfirmOTP);
@@ -180,5 +180,9 @@ public class ForgetPassPage extends JFrame {
 
 	public void showErrorWrongPassword() {
 		JOptionPane.showMessageDialog(this, "Password is wrong", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public void showResendOTPSuccess() {
+		JOptionPane.showMessageDialog(this, "Resend OTP successfully", "Good", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
