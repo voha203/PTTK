@@ -4,28 +4,28 @@ import java.awt.Font;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import Controller.BookingController;
+import Controller.AssignmentController;
 import Controller.MemberController;
 import Controller.TrainerController;
-import Model.Booking;
+import Model.Assignment;
 import Model.Member;
 import Model.Trainer;
 
-public class BookingView extends JFrame {
+public class AssignmentView extends JFrame {
 
-	private BookingController controller = new BookingController();
+	private AssignmentController controller = new AssignmentController();
 	private MemberController memberController = new MemberController();
 	private TrainerController trainerController = new TrainerController();
 
 	private JComboBox<Member> cboMember;
 	private JComboBox<Trainer> cboTrainer;
-	private JTextField txtDate, txtTime;
+	private JTextField txtDate;
 	private JComboBox<String> cboStatus;
 	private JButton btnAdd, btnUpdate, btnDelete, btnRefresh;
 	private JTable table;
 	private DefaultTableModel model;
 
-	public BookingView() {
+	public AssignmentView() {
 		initComponents();
 		loadMember();
 		loadTrainer();
@@ -35,16 +35,16 @@ public class BookingView extends JFrame {
 	}
 
 	private void initComponents() {
-		setTitle("Booking Management");
+		setTitle("Assignment Management");
 		setSize(950, 650);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		JPanel p = new JPanel(null);
 
-		JLabel lb = new JLabel("BOOKING MANAGEMENT");
+		JLabel lb = new JLabel("ASSIGNMENT MANAGEMENT");
 		lb.setFont(new Font("Arial", Font.BOLD, 22));
-		lb.setBounds(270, 20, 350, 30);
+		lb.setBounds(250, 20, 400, 30);
 		p.add(lb);
 
 		p.add(new JLabel("Member")).setBounds(40, 80, 100, 25);
@@ -57,22 +57,16 @@ public class BookingView extends JFrame {
 		cboTrainer.setBounds(150, 120, 220, 25);
 		p.add(cboTrainer);
 
-		p.add(new JLabel("Date")).setBounds(450, 80, 100, 25);
+		p.add(new JLabel("Assigned Date")).setBounds(450, 80, 100, 25);
 		txtDate = new JTextField();
 		txtDate.setBounds(560, 80, 220, 25);
 		p.add(txtDate);
 
-		p.add(new JLabel("Time")).setBounds(450, 120, 100, 25);
-		txtTime = new JTextField();
-		txtTime.setBounds(560, 120, 220, 25);
-		p.add(txtTime);
-
-		p.add(new JLabel("Status")).setBounds(40, 160, 100, 25);
+		p.add(new JLabel("Status")).setBounds(450, 120, 100, 25);
 		cboStatus = new JComboBox<>();
-		cboStatus.addItem("Pending");
-		cboStatus.addItem("Completed");
-		cboStatus.addItem("Cancelled");
-		cboStatus.setBounds(150, 160, 220, 25);
+		cboStatus.addItem("Active");
+		cboStatus.addItem("Inactive");
+		cboStatus.setBounds(560, 120, 220, 25);
 		p.add(cboStatus);
 
 		btnAdd = new JButton("Add");
@@ -80,10 +74,10 @@ public class BookingView extends JFrame {
 		btnDelete = new JButton("Delete");
 		btnRefresh = new JButton("Refresh");
 
-		btnAdd.setBounds(120, 240, 100, 35);
-		btnUpdate.setBounds(240, 240, 100, 35);
-		btnDelete.setBounds(360, 240, 100, 35);
-		btnRefresh.setBounds(480, 240, 100, 35);
+		btnAdd.setBounds(120, 220, 100, 35);
+		btnUpdate.setBounds(240, 220, 100, 35);
+		btnDelete.setBounds(360, 220, 100, 35);
+		btnRefresh.setBounds(480, 220, 100, 35);
 
 		p.add(btnAdd);
 		p.add(btnUpdate);
@@ -91,12 +85,12 @@ public class BookingView extends JFrame {
 		p.add(btnRefresh);
 
 		model = new DefaultTableModel(new String[]{
-				"ID", "Member", "Trainer", "Date", "Time", "Status"
+				"ID", "Member", "Trainer", "Assigned Date", "Status"
 		}, 0);
 		table = new JTable(model);
 
 		JScrollPane sp = new JScrollPane(table);
-		sp.setBounds(30, 310, 880, 270);
+		sp.setBounds(30, 300, 880, 280);
 		p.add(sp);
 
 		add(p);
@@ -120,15 +114,14 @@ public class BookingView extends JFrame {
 
 	private void loadTable() {
 		model.setRowCount(0);
-		List<Booking> list = controller.getAllBooking();
-		for (Booking b : list) {
+		List<Assignment> list = controller.getAllAssignment();
+		for (Assignment a : list) {
 			model.addRow(new Object[]{
-					b.getBookingId(),
-					b.getMemberName(),
-					b.getTrainerName(),
-					b.getBookingDate(),
-					b.getBookingTime(),
-					b.getStatus()
+					a.getAssignmentId(),
+					a.getMemberName(),
+					a.getTrainerName(),
+					a.getAssignedDate(),
+					a.getStatus()
 			});
 		}
 	}
@@ -137,29 +130,27 @@ public class BookingView extends JFrame {
 		cboMember.setSelectedIndex(0);
 		cboTrainer.setSelectedIndex(0);
 		txtDate.setText("");
-		txtTime.setText("");
 		cboStatus.setSelectedIndex(0);
 		table.clearSelection();
 	}
 
-	private Booking getBookingFromForm() {
-		Booking b = new Booking();
+	private Assignment getAssignmentFromForm() {
+		Assignment a = new Assignment();
 		int row = table.getSelectedRow();
 		if (row != -1) {
-			b.setBookingId(Integer.parseInt(model.getValueAt(row, 0).toString()));
+			a.setAssignmentId(Integer.parseInt(model.getValueAt(row, 0).toString()));
 		}
 
 		Member m = (Member) cboMember.getSelectedItem();
 		Trainer t = (Trainer) cboTrainer.getSelectedItem();
 
-		if (m != null) b.setMemberId(m.getMemberId());
-		if (t != null) b.setTrainerId(t.getTrainerId());
+		if (m != null) a.setMemberId(m.getMemberId());
+		if (t != null) a.setTrainerId(t.getTrainerId());
 
-		b.setBookingDate(txtDate.getText().trim());
-		b.setBookingTime(txtTime.getText().trim());
-		b.setStatus(cboStatus.getSelectedItem().toString());
+		a.setAssignedDate(txtDate.getText().trim());
+		a.setStatus(cboStatus.getSelectedItem().toString());
 
-		return b;
+		return a;
 	}
 
 	private void fillForm() {
@@ -167,8 +158,7 @@ public class BookingView extends JFrame {
 		if (row == -1) return;
 
 		txtDate.setText(model.getValueAt(row, 3).toString());
-		txtTime.setText(model.getValueAt(row, 4).toString());
-		cboStatus.setSelectedItem(model.getValueAt(row, 5).toString());
+		cboStatus.setSelectedItem(model.getValueAt(row, 4).toString());
 
 		String member = model.getValueAt(row, 1).toString();
 		for (int i = 0; i < cboMember.getItemCount(); i++) {
@@ -190,21 +180,24 @@ public class BookingView extends JFrame {
 	private void addEvents() {
 		btnAdd.addActionListener(e -> {
 			try {
-				String result = controller.addBooking(getBookingFromForm());
+				String result = controller.addAssignment(getAssignmentFromForm());
 				switch (result) {
 					case "SUCCESS":
-						JOptionPane.showMessageDialog(this, "Booking Success");
+						JOptionPane.showMessageDialog(this, "Assignment Success");
 						loadTable();
 						clearForm();
 						break;
-					case "TRAINER_BUSY":
-						JOptionPane.showMessageDialog(this, "Trainer already has a booking at this time.");
+					case "MEMBER_HAS_TRAINER":
+						JOptionPane.showMessageDialog(this, "Member already has a trainer.");
 						break;
-					case "PACKAGE_EXPIRED":
-						JOptionPane.showMessageDialog(this, "Member package has expired.");
+					case "TRAINER_INACTIVE":
+						JOptionPane.showMessageDialog(this, "Trainer is inactive.");
+						break;
+					case "MEMBER_INACTIVE":
+						JOptionPane.showMessageDialog(this, "Member is inactive.");
 						break;
 					default:
-						JOptionPane.showMessageDialog(this, "Booking Failed");
+						JOptionPane.showMessageDialog(this, "Assignment Failed");
 				}
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(this, "Invalid Data");
@@ -213,11 +206,11 @@ public class BookingView extends JFrame {
 
 		btnUpdate.addActionListener(e -> {
 			if (table.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(this, "Select Booking");
+				JOptionPane.showMessageDialog(this, "Select Assignment");
 				return;
 			}
 			try {
-				if (controller.updateBooking(getBookingFromForm())) {
+				if (controller.updateAssignment(getAssignmentFromForm())) {
 					JOptionPane.showMessageDialog(this, "Update Success");
 					loadTable();
 					clearForm();
@@ -232,13 +225,13 @@ public class BookingView extends JFrame {
 		btnDelete.addActionListener(e -> {
 			int row = table.getSelectedRow();
 			if (row == -1) {
-				JOptionPane.showMessageDialog(this, "Select Booking");
+				JOptionPane.showMessageDialog(this, "Select Assignment");
 				return;
 			}
 			int id = Integer.parseInt(model.getValueAt(row, 0).toString());
-			if (JOptionPane.showConfirmDialog(this, "Delete this booking?", "Confirm", 
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				if (controller.deleteBooking(id)) {
+			int confirm = JOptionPane.showConfirmDialog(this, "Delete this assignment?", "Confirm", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				if (controller.deleteAssignment(id)) {
 					JOptionPane.showMessageDialog(this, "Delete Success");
 					loadTable();
 					clearForm();

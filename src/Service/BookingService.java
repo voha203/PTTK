@@ -5,37 +5,39 @@ import Dao.BookingDAO;
 import Model.Booking;
 
 public class BookingService {
-    private final BookingDAO bookingDAO;
 
-    public BookingService() {
-        this.bookingDAO = new BookingDAO();
-    }
+	private BookingDAO bookingDAO = new BookingDAO();
 
-    // Thêm Booking (Kiểm tra dữ liệu trống)
-    public boolean addBooking(Booking booking) {
-        if (booking == null || booking.getMemberId() <= 0 || booking.getTrainerId() <= 0) {
-            return false;
-        }
-        return bookingDAO.addBooking(booking);
-    }
+	public String addBooking(Booking booking) {
 
-    // Cập nhật Booking
-    public boolean updateBooking(Booking booking) {
-        return bookingDAO.updateBooking(booking);
-    }
+	    if (!bookingDAO.isPackageValid(booking.getMemberId()))
+	        return "PACKAGE_EXPIRED";
 
-    // Xóa Booking
-    public boolean deleteBooking(int bookingId) {
-        return bookingDAO.deleteBooking(bookingId);
-    }
+	    if (bookingDAO.isTrainerBusy(
+	            booking.getTrainerId(),
+	            booking.getBookingDate(),
+	            booking.getBookingTime()))
+	        return "TRAINER_BUSY";
 
-    // Lấy Booking theo ID
-    public Booking getBookingById(int bookingId) {
-        return bookingDAO.getBookingById(bookingId);
-    }
+	    if (bookingDAO.addBooking(booking))
+	        return "SUCCESS";
 
-    // Lấy danh sách toàn bộ Booking
-    public List<Booking> getAllBooking() {
-        return bookingDAO.getAllBooking();
-    }
+	    return "ERROR";
+	}
+
+	public boolean updateBooking(Booking booking) {
+		return bookingDAO.updateBooking(booking);
+	}
+
+	public boolean deleteBooking(int bookingId) {
+		return bookingDAO.deleteBooking(bookingId);
+	}
+
+	public Booking getBookingById(int bookingId) {
+		return bookingDAO.getBookingById(bookingId);
+	}
+
+	public List<Booking> getAllBooking() {
+		return bookingDAO.getAllBooking();
+	}
 }

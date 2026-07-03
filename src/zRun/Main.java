@@ -1,4 +1,12 @@
-//package zRun;
+package zRun;
+import Controller.LoginController;
+import View.PromotionView;
+import View.TrainerView;
+import View.VoucherView;
+import View.PromotionView;
+import View.BookingView;
+import View.RatingView;
+import View.AssignmentView;
 //
 //import Controller.LoginController;
 //import View.LoginPage;
@@ -12,39 +20,9 @@
 //		loginPage.setVisible(true);
 //	}
 //}
-//package zRun;
-//
-//import javax.swing.SwingUtilities;
-//import View.TrainerView;
-//
-//public class Main {
-//
-//    public static void main(String[] args) {
-//        System.out.println("[DEBUG] Ứng dụng bắt đầu khởi chạy...");
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    TrainerView trainerView = new TrainerView();
-//                    trainerView.setVisible(true);
-//                    System.out.println("[DEBUG] Đã hiển thị giao diện TrainerView thành công!");
-//                } catch (Exception e) {
-//                    System.out.println("[DEBUG] LỖI khi khởi tạo giao diện TrainerView:");
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-//}
-package zRun;
-
-import View.BookingView;
-import javax.swing.SwingUtilities;
 public class Main {
-
     public static void main(String[] args) {
-
-    	SwingUtilities.invokeLater(() -> new BookingView());
+        new RatingView
+        ();
     }
-
 }
