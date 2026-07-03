@@ -34,17 +34,19 @@ public class UserDao {
 	}
 
 	public boolean addUser(User user) {
-		String sql = "INSERT INTO users(username,email,password,provider,provider_id,full_name,avatar,active)"
-				+ " VALUES(?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO users(username,email,password,provider,provider_id,full_name,avatar,active,role)"
+				+ " VALUES(?,?,?,?,?,?,?,?,?)";
 		try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getEmail());
 			ps.setString(3, user.getPasswordHash());
 			ps.setString(4, user.getProvider());
 			ps.setString(5, user.getProviderId());
-			ps.setString(6, null);
+			ps.setString(6, user.getFullName());
 			ps.setString(7, null);
 			ps.setBoolean(8, user.getStatus());
+			ps.setString(9, "Member");
+
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();

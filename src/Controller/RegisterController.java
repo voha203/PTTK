@@ -39,7 +39,12 @@ public class RegisterController {
 			return;
 		}
 		User user = new User();
-		user.setUsername(username);
+		
+		String[] parts = username.trim().split("\\s+");
+		String name = parts[parts.length - 1];
+		
+		user.setUsername(name);
+		user.setFullName(username);
 		user.setEmail(email);
 		user.setProvider("LOCAL");
 		user.setStatus(true);
