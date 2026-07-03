@@ -43,21 +43,16 @@ public class ForgetPassController {
 
 	public void resendOTP() {
 		os.sendOTP(user);
+		view.showResendOTPSuccess();
 	}
 
 	public void verifyOTP(String otp) {
 		if (os.verifyOTP(user, otp)) {
 			view.showNewPassword();
+			os.deleteOTP(user);
 		} else {
 			view.showErrorIncorrectOTP();
 		}
-	}
-
-	public static void main(String[] args) {
-		LoginPage loginPage = new LoginPage();
-		LoginController controller = new LoginController(loginPage);
-		loginPage.setController(controller);
-		loginPage.setVisible(true);
 	}
 
 	public void verifyPassword(String pass, String rePass) {
@@ -68,5 +63,13 @@ public class ForgetPassController {
 		} else {
 			view.showErrorWrongPassword();
 		}
+	}
+	
+
+	public static void main(String[] args) {
+		LoginPage loginPage = new LoginPage();
+		LoginController controller = new LoginController(loginPage);
+		loginPage.setController(controller);
+		loginPage.setVisible(true);
 	}
 }
