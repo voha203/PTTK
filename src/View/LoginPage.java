@@ -16,7 +16,7 @@ public class LoginPage extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTextField txtEmail;
     private JPasswordField txtPassword;
-    private JButton btnLogin, btnGoogleLogin, btnFacebookLogin, btnRegister, btnForgotPassword;
+    private JButton btnLogin, btnGoogleLogin, btnRegister, btnForgotPassword;
     private LoginController controller;
 
     public void setController(LoginController controller) {
@@ -54,12 +54,9 @@ public class LoginPage extends JFrame {
         JLabel lblOr = new JLabel("        ----- OR -----");
         lblOr.setBounds(140, 195, 120, 20);
 
-        btnGoogleLogin = new JButton("Google");
-        btnGoogleLogin.setBounds(40, 220, 140, 30);
-
-        btnFacebookLogin = new JButton("Facebook");
-        btnFacebookLogin.setBounds(210, 220, 140, 30);
-
+        btnGoogleLogin = new JButton("Login with Google");
+        btnGoogleLogin.setBounds(40, 220, 310, 30); 
+		
         btnRegister = new JButton("Register");
         btnRegister.setBounds(40, 260, 140, 30);
 
@@ -74,7 +71,6 @@ public class LoginPage extends JFrame {
         panel.add(btnLogin);
         panel.add(lblOr);
         panel.add(btnGoogleLogin);
-        panel.add(btnFacebookLogin);
         panel.add(btnRegister);
         panel.add(btnForgotPassword);
 

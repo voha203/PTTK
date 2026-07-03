@@ -1,27 +1,27 @@
 package Model;
 
 public class Member {
+	private int memberId;
+	private int userId;
+	private String phone;
+	private String gender;
+	private String membershipType;
+	private String packageExpiry;
+	private String status;
+	private String fullName;
+	public Member() {
 
-    private int memberId;
-    private String memberName;
-    private String phone;
-    private String email;
-    private String gender;
-    private String membershipType;
-    private String status;
+	}
 
-    public Member() {
-    }
-
-	public Member(int memberId, String memberName, String phone, String email, String gender, String membershipType,
+	public Member(int memberId, int userId, String phone, String gender, String membershipType, String packageExpiry,
 			String status) {
 		super();
 		this.memberId = memberId;
-		this.memberName = memberName;
+		this.userId = userId;
 		this.phone = phone;
-		this.email = email;
 		this.gender = gender;
 		this.membershipType = membershipType;
+		this.packageExpiry = packageExpiry;
 		this.status = status;
 	}
 
@@ -33,12 +33,12 @@ public class Member {
 		this.memberId = memberId;
 	}
 
-	public String getMemberName() {
-		return memberName;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getPhone() {
@@ -47,14 +47,6 @@ public class Member {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getGender() {
@@ -73,12 +65,30 @@ public class Member {
 		this.membershipType = membershipType;
 	}
 
+	public String getPackageExpiry() {
+		return packageExpiry;
+	}
+
+	public void setPackageExpiry(String packageExpiry) {
+		this.packageExpiry = packageExpiry;
+	}
+
 	public String getStatus() {
-		return status;
+		return status;											
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
-    
+	public String getFullName() {
+	    return fullName;
+	}
+
+	public void setFullName(String fullName) {
+	    this.fullName = fullName;
+	}
+	@Override
+	public String toString() {
+	    return fullName;
+	}
 }
