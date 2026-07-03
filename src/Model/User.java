@@ -11,13 +11,15 @@ public class User {
     private String role;
     private String avatar;
     private boolean status;
+  
+    private boolean wantMail;
 
     public User() {
     }
 
     public User(int id, String username, String fullName, String email,
                 String passwordHash, String provider, String providerId,
-                String role, String avatar, boolean status) {
+                String role, String avatar, boolean status, boolean wantMail) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
@@ -28,6 +30,7 @@ public class User {
         this.role = role;
         this.avatar = avatar;
         this.status = status;
+        this.wantMail = wantMail;
     }
 
     public int getId() {
@@ -108,5 +111,13 @@ public class User {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+  
+    public boolean getWantMail() {
+        return wantMail;
+    }
+
+    public void setWantMail(boolean wantMail) {
+        this.wantMail = wantMail;
     }
 }

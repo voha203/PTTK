@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import Model.Log;
 import Model.User;
 
 public class UserDao {
@@ -56,13 +59,64 @@ public class UserDao {
 	}
 
 	public void changePassword(User user, String pass) {
-	    String sql = "UPDATE users SET password = ? WHERE id = ?";
-	    try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setString(1, pass);
-	        ps.setInt(2, user.getId());
-	        ps.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+		String sql = "UPDATE users SET password = ? WHERE id = ?";
+		try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, pass);
+			ps.setInt(2, user.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<User> getUsersToSendNotificationsBooking(Log log) {
+		List<User> res = new ArrayList<User>();
+		User user;
+		String sql = """
+				SELECT u.*
+				FROM booking b
+				JOIN member m ON b.member_id = m.member_id
+				JOIN users u ON m.user_id = u.id
+				WHERE b.booking_id = ?
+				  AND u.active = 1
+				  AND u.want_mail = 1
+				""";
+
+		try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, log.getRecordId());
+	        ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setStatus(rs.getBoolean("active"));
+				user.setWantMail(rs.getBoolean("want_mail"));
+				res.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	public List<User> getUsersToSendNotificationsPromotion() {
+		List<User> res = new ArrayList<User>();
+		User user;
+		String sql = "SELECT * FROM users WHERE active = 1 and want_mail = 1";
+
+		try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setStatus(rs.getBoolean("active"));
+				user.setWantMail(rs.getBoolean("want_mail"));
+				res.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 }
