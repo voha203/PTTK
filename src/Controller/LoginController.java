@@ -94,6 +94,7 @@ public class LoginController {
 	}
 
 	public void openForgotPasswordPage() {
-		JOptionPane.showMessageDialog(view, "Forgot Password feature is under development.");
+		view.dispose();
+		new ForgetPassController();
 	}
 }

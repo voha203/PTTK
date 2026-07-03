@@ -1,16 +1,9 @@
 package zRun;
+
 import Controller.LoginController;
-import View.PromotionView;
-import View.TrainerView;
-import View.VoucherView;
-import View.PromotionView;
-import View.BookingView;
+import View.LoginPage;
 import View.RatingView;
-import View.AssignmentView;
-//
-//import Controller.LoginController;
-//import View.LoginPage;
-//
+
 //public class Main {
 //
 //	public static void main(String[] args) {
@@ -20,9 +13,9 @@ import View.AssignmentView;
 //		loginPage.setVisible(true);
 //	}
 //}
+
 public class Main {
     public static void main(String[] args) {
-        new BookingView
-        ();
+        new RatingView();
     }
 }
