@@ -32,5 +32,5 @@ public class RatingController {
     public List<Rating> getAllRating() {
         return ratingService.getAllRating();
     }
-
+    
 }
