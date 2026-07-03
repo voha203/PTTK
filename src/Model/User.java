@@ -8,11 +8,13 @@ public class User {
 	private String provider;
 	private String providerId;
 	private boolean status;
+	
+	private boolean wantMail;
 
 	public User() {
 	}
 
-	public User(int id, String username, String email, String passwordHash, String provider, String providerId,boolean status) {
+	public User(int id, String username, String email, String passwordHash, String provider, String providerId,boolean status, boolean wantMail) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -20,6 +22,7 @@ public class User {
 		this.provider = provider;
 		this.providerId = providerId;
 		this.status = status;
+		this.wantMail = wantMail;
 	}
 
 	public int getId() {
@@ -76,5 +79,13 @@ public class User {
 
 	public boolean getStatus() {
 		return status;
+	}
+
+	public boolean isWantMail() {
+		return wantMail;
+	}
+
+	public void setWantMail(boolean wantMail) {
+		this.wantMail = wantMail;
 	}
 }

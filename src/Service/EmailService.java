@@ -2,6 +2,7 @@ package Service;
 
 import java.util.Properties;
 
+import Model.Notification;
 import Model.User;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
@@ -13,14 +14,39 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
 public class EmailService {
-
-	public void notifyPasswordChanged(User user) {
-		Properties props = new Properties();
+	private Properties props;
+	private final String EMAIL = "23130288@st.hcmuaf.edu.vn";
+	private final String APP_PASS = "wacswtfmfirfnzxj";
+	
+	public EmailService() {
+		props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
+	}
 
+	public void notifyPasswordChanged(User user) {
+		Session session = Session.getInstance(props, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(EMAIL, APP_PASS);
+			}
+		});
+
+		Message message = new MimeMessage(session);
+		try {
+			message.setFrom(new InternetAddress(EMAIL));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
+			message.setSubject("OTP Verification");
+			message.setText("Your password has changed");
+			Transport.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean sendNotification(Notification noti, User user) {
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -30,13 +56,15 @@ public class EmailService {
 
 		Message message = new MimeMessage(session);
 		try {
-			message.setFrom(new InternetAddress("23130288@st.hcmuaf.edu.vn"));
+			message.setFrom(new InternetAddress(EMAIL));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
-			message.setSubject("OTP Verification");
-			message.setText("Your password has changed");
+			message.setSubject(noti.getTitle());
+			message.setText(noti.getContent());
 			Transport.send(message);
+			return true;
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 }
