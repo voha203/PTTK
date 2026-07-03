@@ -15,7 +15,7 @@ import View.RatingView;
 //}
 
 public class Main {
-	public static void main(String[] args) {
-		new RatingView();
-	}
+    public static void main(String[] args) {
+        new RatingView();
+    }
 }

@@ -19,14 +19,16 @@ public class BookingDAO {
 	}
 
 	public boolean addBooking(Booking b) {
-		String sql = "INSERT INTO booking(member_id,trainer_id,booking_date,booking_time,status) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO booking(member_id,trainer_id,booking_date,booking_time,price,final_price,status) VALUES(?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, b.getMemberId());
 			ps.setInt(2, b.getTrainerId());
 			ps.setString(3, b.getBookingDate());
 			ps.setString(4, b.getBookingTime());
-			ps.setString(5, b.getStatus());
+			ps.setDouble(5, b.getPrice());
+			ps.setDouble(6, b.getFinalPrice());
+			ps.setString(7, b.getStatus());
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,15 +37,18 @@ public class BookingDAO {
 	}
 
 	public boolean updateBooking(Booking b) {
-		String sql = "UPDATE booking SET member_id=?,trainer_id=?,booking_date=?,booking_time=?,status=? WHERE booking_id=?";
+		String sql = "UPDATE booking SET member_id=?,trainer_id=?,booking_date=?,booking_time=?,price=?,final_price=?,status=? WHERE booking_id=?";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, b.getMemberId());
 			ps.setInt(2, b.getTrainerId());
 			ps.setString(3, b.getBookingDate());
 			ps.setString(4, b.getBookingTime());
-			ps.setString(5, b.getStatus());
-			ps.setInt(6, b.getBookingId());
+			ps.setDouble(5, b.getPrice());
+			ps.setDouble(6, b.getFinalPrice());
+
+			ps.setString(7, b.getStatus());
+			ps.setInt(8, b.getBookingId());
 			return ps.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,6 +86,8 @@ public class BookingDAO {
 				b.setTrainerName(rs.getString("trainer_name"));
 				b.setBookingDate(rs.getString("booking_date"));
 				b.setBookingTime(rs.getString("booking_time"));
+				b.setPrice(rs.getDouble("price"));
+				b.setFinalPrice(rs.getDouble("final_price"));
 				b.setStatus(rs.getString("status"));
 				return b;
 			}
@@ -108,6 +115,8 @@ public class BookingDAO {
 				b.setTrainerName(rs.getString("trainer_name"));
 				b.setBookingDate(rs.getString("booking_date"));
 				b.setBookingTime(rs.getString("booking_time"));
+				b.setPrice(rs.getDouble("price"));
+				b.setFinalPrice(rs.getDouble("final_price"));
 				b.setStatus(rs.getString("status"));
 				list.add(b);
 			}
@@ -153,5 +162,19 @@ public class BookingDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public int getLastBookingId() {
+		String sql = "SELECT MAX(booking_id) FROM booking";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 }

@@ -118,4 +118,46 @@ public class VoucherDAO {
 		}
 		return list;
 	}
+	public Voucher getVoucherByCode(String code) {
+		String sql = "SELECT * FROM voucher WHERE voucher_code=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, code);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				Voucher voucher = new Voucher();
+				voucher.setVoucherId(rs.getInt("voucher_id"));
+				voucher.setPromotionId(rs.getInt("promotion_id"));
+				voucher.setVoucherCode(rs.getString("voucher_code"));
+				voucher.setDiscountPercent(rs.getInt("discount_percent"));
+				voucher.setMinimumAmount(rs.getDouble("minimum_amount"));
+				voucher.setQuantity(rs.getInt("quantity"));
+				voucher.setUsedCount(rs.getInt("used_count"));
+				voucher.setExpireDate(rs.getString("expire_date"));
+				voucher.setStatus(rs.getString("status"));
+				return voucher;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public boolean increaseUsedCount(int voucherId) {
+
+	    String sql = "UPDATE voucher SET used_count = used_count + 1 WHERE voucher_id=?";
+
+	    try {
+
+	        PreparedStatement ps = conn.prepareStatement(sql);
+
+	        ps.setInt(1, voucherId);
+
+	        return ps.executeUpdate() > 0;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
 }

@@ -9,12 +9,13 @@ public class Booking {
 	private String bookingDate;
 	private String bookingTime;
 	private String status;
-
+	private double price;
+	private double finalPrice;
 	public Booking() {
 	}
 
 	public Booking(int bookingId, int memberId, int trainerId, String memberName, String trainerName,
-			String bookingDate, String bookingTime, String status) {
+			String bookingDate, String bookingTime, String status, double price, double finalPrice) {
 		super();
 		this.bookingId = bookingId;
 		this.memberId = memberId;
@@ -24,6 +25,8 @@ public class Booking {
 		this.bookingDate = bookingDate;
 		this.bookingTime = bookingTime;
 		this.status = status;
+		this.price = price;
+		this.finalPrice = finalPrice;
 	}
 
 	public int getBookingId() {
@@ -89,6 +92,23 @@ public class Booking {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public double getFinalPrice() {
+		return finalPrice;
+	}
+
+	public void setFinalPrice(double finalPrice) {
+		this.finalPrice = finalPrice;
+	}
+
 	@Override
 	public String toString() {
 	    return memberName;

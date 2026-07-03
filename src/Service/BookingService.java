@@ -40,4 +40,7 @@ public class BookingService {
 	public List<Booking> getAllBooking() {
 		return bookingDAO.getAllBooking();
 	}
+	public int getLastBookingId() {
+	    return bookingDAO.getLastBookingId();
+	}
 }
