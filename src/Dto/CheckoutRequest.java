@@ -1,4 +1,4 @@
-package com.gymsystem.payment.dto;
+package Dto;
 
 /**
  * DTO để nhận request thanh toán từ client

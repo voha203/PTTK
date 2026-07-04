@@ -1,4 +1,4 @@
-package com.gymsystem.payment.controller;
+package Controller;
 
 import com.gymsystem.payment.dto.CheckoutRequest;
 import com.gymsystem.payment.model.Payment;

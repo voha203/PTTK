@@ -1,4 +1,4 @@
-package com.gymsystem.payment.model;
+package Model;
 
 public class MomoPayment extends Payment {
 

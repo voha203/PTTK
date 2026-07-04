@@ -1,4 +1,4 @@
-package com.gymsystem.payment.service;
+package Service;
 
 import com.gymsystem.payment.model.*;
 import com.gymsystem.payment.dto.CheckoutRequest;

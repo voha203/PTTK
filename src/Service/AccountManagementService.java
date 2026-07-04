@@ -1,4 +1,4 @@
-package com.gymsystem.account.service;
+package Service;
 
 import Dao.UserDao;
 import Model.User;
