@@ -1,4 +1,4 @@
-package com.gymsystem.payment.model;
+package Model;
 
 import java.time.LocalDateTime;
 
