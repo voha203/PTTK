@@ -1,13 +1,13 @@
 package Model;
 
-public class Member {
+public class Member extend Account {
 	private int memberId;
 	private int userId;
 	private String phone;
 	private String gender;
 	private String membershipType;
 	private String packageExpiry;
-	private String status;
+	private String membershipStatus;
 	private String fullName;
 	public Member() {
 
@@ -22,7 +22,9 @@ public class Member {
 		this.gender = gender;
 		this.membershipType = membershipType;
 		this.packageExpiry = packageExpiry;
-		this.status = status;
+		this.membershipStatus = "INACTIVE";// Mặc định chưa kích hoạt cho đến khi thanh toán gói
+		this.fullName = fullName;
+    }
 	}
 
 	public int getMemberId() {
